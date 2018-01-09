@@ -3,9 +3,13 @@ import {BOARD_SIZE, BOARD_PADDING, FIELD_SIZE, COLUMNS} from '../constants/Layou
 
 import Field from './Field';
 
+import * as types from '../state/types';
+
 import './Board.css';
 
 export interface Props {
+    board: types.Board;
+    onSet: (idx: number) => void;
 }
 
 
@@ -28,17 +32,16 @@ const TTTGrid = () =>  {
 
 class Board extends React.Component<Props, object> {
   render() {
-    // const {  enthusiasmLevel = 1 } = this.props;
+      const { board } = this.props;
 
       const svgSize = BOARD_SIZE + 2* BOARD_PADDING;
-      const board = "X--OX-OOX".split("");
       
       return (
 	  <svg width={svgSize} height={svgSize} >
-	    <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING}`}  >
+	    <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
 	      <TTTGrid />
-	      { board.map( (value, idx) => (
-		  <Field x={column(idx)} y={row(idx)} value={value}/>
+	      { board.map( (value: types.FieldValue, idx: number) => (
+		      <Field x={column(idx)} y={row(idx)} value={value} onClick={() => this.props.onSet(idx)} />
 	      ))}
 	    </g>
 	  </svg>

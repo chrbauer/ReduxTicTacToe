@@ -6,6 +6,8 @@ export enum FieldValue {
   Empty, X, O
 }
 
+export type Board = List<FieldValue>;
+
 export interface StoreState {
-   board: List<FieldValue>
+   board: Board
 }

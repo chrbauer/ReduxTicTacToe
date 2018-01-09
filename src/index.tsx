@@ -2,21 +2,25 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
 
-import { List } from 'immutable';
+import { Repeat } from 'immutable';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware  } from 'redux';
 import { Provider } from 'react-redux';
 import { StoreState, FieldValue } from './state/types';
-
-
+ 
+import { createLogger } from 'redux-logger'
 
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
+const loggerMiddleware = createLogger()
+
 const store = createStore<StoreState>(x => x,
   {
-     board: List<FieldValue>()
-  }
+     board: Repeat(FieldValue.Empty, 9).toList()
+  }, applyMiddleware(
+     loggerMiddleware
+   )
 )
   
 

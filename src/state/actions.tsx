@@ -1,10 +1,11 @@
-import { createAction } from 'redux-actions';
+import { createActions } from 'redux-actions';
 
-const actions = createActions({
-   GAME: {
-      NEW: undefined
-      SET: undefined
-   }
+export const actions = createActions({
+    NEW: undefined,
+    SET: undefined
 });
 
 
+
+
+export default actions
