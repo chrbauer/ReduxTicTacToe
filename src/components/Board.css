@@ -1,0 +1,17 @@
+svg {
+    background-color: #d0d0d0;
+    margin: 60px 30px 30px 30px;
+}
+
+.grid {
+    stroke: rgb(0, 0, 0);
+    stroke-width: 4;
+    stroke-linecap: "round";
+    stroke-linejoin: "round";
+}
+
+
+.marker {
+    stroke: black;
+    stroke-width: 5;
+}
