@@ -7,7 +7,6 @@ class Cross extends React.Component<{}, object> {
 	 <circle className="marker"  cx={FIELD_SIZE/2} cy={FIELD_SIZE/2} r={FIELD_SIZE/3} />
     );
   }
-
 }
 
 export default Cross
