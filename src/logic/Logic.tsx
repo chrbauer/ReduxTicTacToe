@@ -6,8 +6,19 @@ export enum FieldValue {
   Empty, X, O
 }
 
-export type Board = List<FieldValue>;
+export interface Board {
+  fields: List<FieldValue>;
+  colorToMove: FieldValue.X | FieldValue.O;  
+}
 
+export const flipColorToMove = (color: FieldValue.X | FieldValue.O) => color === FieldValue.X ? FieldValue.O : FieldValue.X
 
-export const updateBoard = (board: Board, idx: number) => board.set(idx, FieldValue.X);
-export const initialBoard : Board = Repeat(FieldValue.Empty, 9).toList();	
+export const updateBoard = ({fields, colorToMove}: Board, idx: number) => ({
+    fields: fields.set(idx, colorToMove),
+    colorToMove: flipColorToMove(colorToMove)
+})
+
+export const initialBoard : Board = {
+       fields: Repeat(FieldValue.Empty, 9).toList(),
+       colorToMove: FieldValue.X
+}       
