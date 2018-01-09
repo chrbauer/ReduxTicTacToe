@@ -3,12 +3,12 @@ import {BOARD_SIZE, BOARD_PADDING, FIELD_SIZE, COLUMNS} from '../constants/Layou
 
 import Field from './Field';
 
-import * as types from '../state/types';
+import * as logic from '../logic/Logic';
 
 import './Board.css';
 
 export interface Props {
-    board: types.Board;
+    board: logic.Board;
     onSet: (idx: number) => void;
 }
 
@@ -40,7 +40,7 @@ class Board extends React.Component<Props, object> {
 	  <svg width={svgSize} height={svgSize} >
 	    <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
 	      <TTTGrid />
-	      { board.map( (value: types.FieldValue, idx: number) => (
+	      { board.map( (value: logic.FieldValue, idx: number) => (
 		      <Field x={column(idx)} y={row(idx)} value={value} onClick={() => this.props.onSet(idx)} />
 	      ))}
 	    </g>
