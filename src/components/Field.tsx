@@ -17,13 +17,11 @@ class Field extends React.Component<Props, object> {
   }
 
   render() {
-    const {  x, y } = this.props;
+    const {  x, y, value } = this.props;
     return (
       <g transform={`translate(${x*FIELD_SIZE}, ${y*FIELD_SIZE})`} >
          <rect fill="transparent" stroke="none" width={FIELD_SIZE} height={FIELD_SIZE} onClick={this.onClick} />
-	 <circle cx={FIELD_SIZE/2} cy={FIELD_SIZE/2} r={FIELD_SIZE/3}  />
-	 <Circle />
-	 <Cross />
+        { value === "O" ? <Circle /> : (value === "X" ?  <Cross /> : null ) }
       </g>
     );
   }

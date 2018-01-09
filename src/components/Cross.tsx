@@ -10,7 +10,7 @@ class Cross extends React.Component<{}, object> {
 
   render() {
     return (
-      <g>
+      <g className="marker">
 	 <line  x1={FIELD_SIZE/4} y1={FIELD_SIZE/4} x2={3*FIELD_SIZE/4} y2={3*FIELD_SIZE/4}  />
 	 <line  x2={FIELD_SIZE/4} y1={FIELD_SIZE/4} x1={3*FIELD_SIZE/4} y2={3*FIELD_SIZE/4}  />		
       </g>
