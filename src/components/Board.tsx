@@ -1,10 +1,7 @@
 import * as React from 'react';
-import {BOARD_SIZE, BOARD_PADDING, FIELD_SIZE, COLUMNS} from '../constants/Layout';
-
+import {BOARD_SIZE, BOARD_PADDING, FIELD_SIZE} from '../constants/Layout';
 import Field from './Field';
-
 import * as logic from '../logic/Logic';
-
 import './Board.css';
 
 export interface Props {
@@ -13,8 +10,6 @@ export interface Props {
 }
 
 
-const column = (idx: number): number => idx % COLUMNS
-const row    = (idx: number): number => ~~(idx / COLUMNS)
 
 const TTTGrid = () =>  {
    return (
@@ -37,14 +32,19 @@ class Board extends React.Component<Props, object> {
       const svgSize = BOARD_SIZE + 2* BOARD_PADDING;
       
       return (
+	  <div>
 	  <svg width={svgSize} height={svgSize} >
 	    <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
 	      <TTTGrid />
 	      { board.fields.map( (value: logic.FieldValue, idx: number) => (
-		      <Field x={column(idx)} y={row(idx)} value={value} onClick={() => this.props.onSet(idx)} />
+		      <Field x={logic.column(idx)} y={logic.row(idx)} value={value} onClick={() => this.props.onSet(idx)} />
 	      ))}
 	    </g>
-	  </svg>
+	      </svg>
+	      <p>
+	      <span> {logic.Phase[board.phase]} </span>
+	      </p>
+        </div>
     );
   }
 }
