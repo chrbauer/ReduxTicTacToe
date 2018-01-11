@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/redux-actions": "^2.2.3",
     "@types/redux-logger": "^3.0.5",
+    "express": "^4.16.2",
     "immutable": "^3.8.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

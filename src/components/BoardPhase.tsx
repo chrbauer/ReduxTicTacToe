@@ -11,7 +11,7 @@ const Messages = {
   [Phase.Playing]: "Das Spiel läuft aktuell noch...",
   [Phase.WinX]: "X hat gewonnen",
   [Phase.WinO]: "O hat gewonnen",
-  [Phase.WinO]: "Unentschieden!"
+  [Phase.Draw]: "Unentschieden!"
 }
 
 class BoardPhase extends React.Component<Props, object> {
