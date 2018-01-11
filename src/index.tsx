@@ -5,8 +5,10 @@ import App from './App';
 import { createStore, applyMiddleware  } from 'redux';
 import { Provider } from 'react-redux';
 import { StoreState } from './state/types';
- 
+
+// Middlewares
 import { createLogger } from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -19,7 +21,8 @@ import './index.css';
 
 const loggerMiddleware = createLogger()
 
-const store = createStore<StoreState|undefined>(rootReducer, undefined, applyMiddleware(
+const store = createStore<StoreState|undefined>(rootReducer as any, undefined, applyMiddleware(
+     thunkMiddleware,
      loggerMiddleware
    )
 )

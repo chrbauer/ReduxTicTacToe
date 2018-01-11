@@ -1,5 +1,4 @@
 import { Repeat } from 'immutable';
-
 import { List } from 'immutable';
 
 export const COLUMNS       = 3;
@@ -8,7 +7,10 @@ export enum FieldValue {
   Empty, X, O
 }
 
-type Player = FieldValue.X | FieldValue.O;
+export type Player = FieldValue.X | FieldValue.O;
+
+export const PlayerX = FieldValue.X;
+export const PlayerO = FieldValue.O;
 
 export enum Phase {
     NotStarted, Playing, WinX, WinO, Draw

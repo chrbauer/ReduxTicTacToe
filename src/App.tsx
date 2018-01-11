@@ -1,11 +1,13 @@
 import * as React from 'react';
 
+import ActionButtons from './containers/ActionButtons';
 import Board from './containers/Board';
 import BoardPhase from './containers/BoardPhase';
 
+
 import './App.css';
 
-import { Button, Grid } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 const logo = require('./logo_ittalk.png');
 
@@ -21,7 +23,7 @@ class App extends React.Component {
 	  <Grid columns={3} relaxed>
 	    <Grid.Row>
 	    <Grid.Column>
-              <Button>Button</Button>
+              <ActionButtons />
 	    </Grid.Column>
 	    
             <Grid.Column>
