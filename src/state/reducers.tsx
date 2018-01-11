@@ -1,11 +1,9 @@
 import { handleActions } from 'redux-actions';
-import {/* Dispatch,*/ combineReducers } from "redux";
+import { combineReducers } from "redux";
 
 import { StoreState } from './types';
-import { Board, initialBoard, updateBoard } from '../logic/Logic';
+import { Board, Player, initialBoard, updateBoard } from '../logic/Logic';
 import { Server, ServerState, initialServer } from '../logic/Server';
-
-
 
 const board = handleActions({
     SET: ((board : Board, action: { payload: number }) =>  updateBoard(board, action.payload)) as any,
@@ -14,7 +12,9 @@ const board = handleActions({
 
 
 const server = handleActions({
-    FINDMATCH: ((server : Server, action: any) =>  ({ ...server, state: ServerState.Searching})) as any
+    FINDMATCH_ENDED: ((server: Server, action: { myColor: Player, game: number}) => ({ ...server, state: ServerState.Playing})) as any,
+    FINDMATCH_SUCCEEDED: (server, { payload } ) => ({ ...server, ...payload }),
+     FINDMATCH_STARTED: (server) => ({ ...server, state: ServerState.Searching})
 }, initialServer);
 
 

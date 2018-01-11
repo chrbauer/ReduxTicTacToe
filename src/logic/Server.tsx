@@ -5,13 +5,15 @@ export enum ServerState {
 }
 
 export interface Server {
-   gameId: number;
+   game: number;
    myColor: Player;
    state: ServerState;
 }
 
 export const initialServer : Server = {
-       gameId: -1,
+       game: -1,
        myColor: PlayerX,
        state: ServerState.NotConnected
 }
+
+

@@ -8,26 +8,42 @@ let room = {
 
 let games = [];
 
-app.get('/findmatch', function (req, res) {
+function sendJSON(res, obj) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(obj));
+}
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+app.post('/findmatch', function (req, res) {
     if( room.partner != null ) {
 	console.log("Found Match");
 
-	
-	room.partner.send(JSON.stringify({
-	    matchid: room.id,
+	sendJSON( room.partner, {
+	    game: room.id,
 	    player: 'X'
-	}));
-	res.send(JSON.stringify({
-	    matchid: room.id,
+	});
+	sendJSON( res, {
+	    game: room.id,
 	    player: 'O'
-	}));
+	});
 	room.id++;
+	room.partner = null;
     } else {
-	console.log("Wait for Parner");
+	console.log("Wait for Partner...");
 	room.partner = res;
     }
 });
 
-app.listen(3333, function () {
-  console.log('Example app listening on port 3333!');
+const server = app.listen(3333, function () {
+  console.log('TTT Server listening on port 3333!');
 });
+
+
+server.timeout = 1000 * 60 * 60; // 1h
+console.log("Ready");

@@ -16,8 +16,9 @@ class ActionButtons extends React.Component<Props, object> {
     return (
       <div>
             <Button
-	      loading={p.server.state === ServerState.Searching}
-	onClick={p.onFindMatch}>FindMatch {p.server.state}</Button>
+	loading={p.server.state === ServerState.Searching}
+	label="Find Match"
+	onClick={p.onFindMatch} />
       </div>
     );
   }
