@@ -1,11 +1,22 @@
 import Board from '../components/Board';
-import actions from '../state/actions';
+import { actions, asyncActions} from '../state/actions';
 import { StoreState } from '../state/types';
 import { connect, Dispatch } from 'react-redux';
+import { Player } from '../logic/Logic';
+import { Server } from '../logic/Server';
 
-const mapStateToProps = ({ board }: StoreState) => ({board})
+const mapStateToProps = ({ board, server }: StoreState) => ({board, server})
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({ onSet: (idx: number) => dispatch(actions.set( idx ))})
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+    onSet: (idx: number, color: Player, server: Server) => {
+	if( server.game < 0 ) {
+	    dispatch(actions.set( idx ))
+	} else {
+	    dispatch(asyncActions.send(server.game, idx, color));
+	}
+    }
+})
  
 
 export default connect(mapStateToProps,  mapDispatchToProps)(Board as any);

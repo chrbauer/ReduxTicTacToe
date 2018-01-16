@@ -2,11 +2,13 @@ import * as React from 'react';
 import {BOARD_SIZE, BOARD_PADDING, FIELD_SIZE} from '../constants/Layout';
 import Field from './Field';
 import * as logic from '../logic/Logic';
+import * as server from '../logic/Server';
 import './Board.css';
 
 export interface Props {
     board: logic.Board;
-    onSet: (idx: number) => void;
+    server: server.Server;
+    onSet: (idx: number, color: logic.Player, server: server.Server) => void;
 }
 
 
@@ -37,7 +39,7 @@ class Board extends React.Component<Props, object> {
 	    <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
 	      <TTTGrid />
 	      { board.fields.map( (value: logic.FieldValue, idx: number) => (
-		      <Field x={logic.column(idx)} y={logic.row(idx)} value={value} onClick={() => this.props.onSet(idx)} />
+		      <Field x={logic.column(idx)} y={logic.row(idx)} value={value} onClick={() => this.props.onSet(idx, board.colorToMove, this.props.server)} />
 	      ))}
 	    </g>
 	      </svg>
