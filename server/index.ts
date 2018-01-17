@@ -90,7 +90,7 @@ app.post('/game/:num', function(req, res) {
                     if (gameState.moves.length > obs.getmove) {
                         obs.res.status(200).send(JSON.stringify({
                             move: gameState.moves[obs.getmove],
-                            yourturn: gameState.board.colorToMove === req.body.player,
+                            colorToMove: gameState.board.colorToMove,
                             done: !logic.isEditable(gameState.board)
                         }));
                     } else {
@@ -108,7 +108,7 @@ app.post('/game/:num', function(req, res) {
                 console.log("resp");
                 sendJSON(res, JSON.stringify({
                     move: gameState.moves[req.body.getmove],
-                    yourturn: gameState.board.colorToMove === req.body.player,
+                    colorToMove: gameState.board.colorToMove,
                     done: !logic.isEditable(gameState.board)
                 }));
             }

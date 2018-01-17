@@ -11,20 +11,17 @@ export interface Props {
     onSet: (idx: number, server: server.Server, board: logic.Board) => void;
 }
 
-
-
 const TTTGrid = () => {
     return (
         <g className="grid">
             {[1, 2].map(
                 shift =>
-                    (
-                        <g key={shift}>
-                            <line x1={FIELD_SIZE * shift} y1="0" x2={FIELD_SIZE * shift} y2={BOARD_SIZE} />
-                            <line x1="0" y1={FIELD_SIZE * shift} x2={BOARD_SIZE} y2={FIELD_SIZE * shift} />
-                        </g>
-                    ))}
-        </g>)
+                    (<g key={shift}>
+                        <line x1={FIELD_SIZE * shift} y1="0" x2={FIELD_SIZE * shift} y2={BOARD_SIZE} />
+                        <line x1="0" y1={FIELD_SIZE * shift} x2={BOARD_SIZE} y2={FIELD_SIZE * shift} />
+                    </g>))}
+        </g>
+    )
 };
 
 class Board extends React.Component<Props, object> {

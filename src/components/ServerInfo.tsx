@@ -37,7 +37,7 @@ class ServerInfo extends React.Component<Props, object> {
                                     Am Zug
 			     </Table.Cell>
                                 <Table.Cell>
-                                    {server.gameState === GameState.Playing ? (server.myturn ? "Du" : "Gegner") : ""}
+                                    {server.gameState === GameState.Playing ? (server.player === server.colorToMove ? "Du" : "Gegner") : ""}
                                 </Table.Cell>
                             </Table.Row>
                             <Table.Row>

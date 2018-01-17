@@ -35,7 +35,7 @@ const server = handleActions({
     }),
     FOLLOWGAME_SUCCEEDED: (server, { payload }: any) => ({
         ...server,
-        myturn: payload.yourturn,
+        colorToMove: payload.colorToMove,
         gameState: payload.done ? GameState.Finished : server.gameState
     })
 }, initialServer);
