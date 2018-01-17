@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 
 import { StoreState } from './types';
 import { Board, Player, PlayerX, initialBoard, updateBoard } from '../logic/Logic';
-import { Server, ServerState, GameState, initialServer } from '../logic/Server';
+import { Server, OnlineState, initialServer } from '../logic/Server';
 
 const board = handleActions({
     SET: ((board: Board, action: { payload: number }) => updateBoard(board, action.payload)) as any,
@@ -13,30 +13,29 @@ const board = handleActions({
 
 
 const server = handleActions({
-    FINDMATCH_ENDED: ((server: Server, action: { myColor: Player, game: number }) => ({ ...server, state: ServerState.Playing })) as any,
-    FINDMATCH_SUCCEEDED: (server, { payload }: any) => ({
+    NEW: ((server: Server, action: { myColor: Player, game: number }) => ({ ...server, connected: false })) as any,
+    FINDMATCH_SUCCEEDED: (server: Server, { payload }: any) => ({
         ...server,
         ...payload,
-        gameState: GameState.Playing,
+        onlineState: OnlineState.Playing,
         connected: true,
         colorToMove: PlayerX
     }),
     FINDMATCH_FAILED: (server, { payload }) => ({
         ...server,
-        gameState: GameState.Error,
+        onlineState: OnlineState.Error,
         connected: false,
         errorMsg: (payload as any).message || "Error"
     }),
     FINDMATCH_STARTED: (server) => ({
         ...server,
         errorMsg: "",
-        gameState: GameState.FindMatch,
-        state: ServerState.Searching
+        onlineState: OnlineState.FindMatch
     }),
     FOLLOWGAME_SUCCEEDED: (server, { payload }: any) => ({
         ...server,
         colorToMove: payload.colorToMove,
-        gameState: payload.done ? GameState.Finished : server.gameState
+        onlineState: payload.done ? OnlineState.NotPlaying : server.onlineState
     })
 }, initialServer);
 

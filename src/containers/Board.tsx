@@ -10,7 +10,7 @@ const mapStateToProps = ({ board, server }: StoreState) => ({ board, server })
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     onSet: (idx: number, server: Server, board: logic.Board) => {
-        if (server.game < 0) {
+        if (!server.connected) {
             dispatch(actions.set(idx))
         } else if (server.player === board.colorToMove) {
             dispatch(asyncActions.send(server.game, idx, board.colorToMove));

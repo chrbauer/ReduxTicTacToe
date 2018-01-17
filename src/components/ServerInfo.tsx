@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { Table } from 'semantic-ui-react'
 //import { Phase, Board } from '../logic/Logic';
-import { Server, GameState } from '../logic/Server';
+import { FieldValue } from '../logic/Logic';
+import { Server, OnlineState } from '../logic/Server';
 
 export interface Props {
     server: Server;
 }
 
-const GameStateMsg = {
-    [GameState.Playing]: "Spiel läuft...",
-    [GameState.Waiting]: "",
-    [GameState.Finished]: "Spiel ist beendent",
-    [GameState.FindMatch]: "Search for partner....",
-    [GameState.Error]: "Server error"
+const OnlineStateMsg = {
+    [OnlineState.Playing]: "Spiel läuft...",
+    [OnlineState.NotPlaying]: "",
+    [OnlineState.FindMatch]: "Search for partner....",
+    [OnlineState.Error]: "Server error"
 }
 
 
@@ -34,10 +34,18 @@ class ServerInfo extends React.Component<Props, object> {
                         (<>
                             <Table.Row>
                                 <Table.Cell>
+                                    Deine Farbe
+			     </Table.Cell>
+                                <Table.Cell>
+                                    {FieldValue[server.player]}
+                                </Table.Cell>
+                            </Table.Row>
+                            <Table.Row>
+                                <Table.Cell>
                                     Am Zug
 			     </Table.Cell>
                                 <Table.Cell>
-                                    {server.gameState === GameState.Playing ? (server.player === server.colorToMove ? "Du" : "Gegner") : ""}
+                                    {server.onlineState === OnlineState.Playing ? (server.player === server.colorToMove ? "Du" : "Gegner") : ""}
                                 </Table.Cell>
                             </Table.Row>
                             <Table.Row>
@@ -45,7 +53,7 @@ class ServerInfo extends React.Component<Props, object> {
                                     Status
 			     </Table.Cell>
                                 <Table.Cell>
-                                    {GameStateMsg[server.gameState]}
+                                    {OnlineStateMsg[server.onlineState]}
                                 </Table.Cell>
                             </Table.Row>
                             {server.errorMsg &&
