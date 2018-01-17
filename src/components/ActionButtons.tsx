@@ -21,6 +21,7 @@ class ActionButtons extends React.Component<Props, object> {
                     <Button
                         icon="game"
                         disabled={p.server.connected && p.server.onlineState !== OnlineState.NotPlaying}
+                        primary={p.server.connected && p.server.onlineState === OnlineState.NotPlaying}
                         label="New Game"
                         onClick={p.onNewGame} />
                 </List.Item>
