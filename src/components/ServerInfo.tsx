@@ -8,9 +8,11 @@ export interface Props {
 }
 
 const GameStateMsg = {
-    [GameState.Playing]: "Spiel l‰uft...",
+    [GameState.Playing]: "Spiel l√§uft...",
     [GameState.Waiting]: "",
-    [GameState.Playing]: "Spiel ist beendent"
+    [GameState.Finished]: "Spiel ist beendent",
+    [GameState.FindMatch]: "Search for partner....",
+    [GameState.Error]: "Server error"
 }
 
 
@@ -19,40 +21,46 @@ class ServerInfo extends React.Component<Props, object> {
         const { server } = this.props;
         return (
             <Table>
-                <Table.Row>
-                    <Table.Cell>
-                        Mode
-		    </Table.Cell>
-                    <Table.Cell>
-                        {server.connected ? "Online" : "Offline"}
-                    </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Cell>
-                        Am Zug
-		    </Table.Cell>
-                    <Table.Cell>
-                        {server.myturn ? "Du" : "Gegner"}
-                    </Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Cell>
-                        Status
-		    </Table.Cell>
-                    <Table.Cell>
-                        {GameStateMsg[server.gameState]}
-                    </Table.Cell>
-                </Table.Row>
-                {server.errorMsg &&
-                    (<Table.Row>
+                <Table.Body>
+                    <Table.Row>
                         <Table.Cell>
-                            Problem
-		    </Table.Cell>
+                            Mode
+			</Table.Cell>
                         <Table.Cell>
-                            {server.errorMsg}
-		    </Table.Cell>
-                    </Table.Row>)
-                }
+                            {server.connected ? "Online" : "Offline"}
+                        </Table.Cell>
+                    </Table.Row>
+                    {server.connected &&
+                        (<>
+                            <Table.Row>
+                                <Table.Cell>
+                                    Am Zug
+			     </Table.Cell>
+                                <Table.Cell>
+                                    {server.gameState === GameState.Playing ? (server.myturn ? "Du" : "Gegner") : ""}
+                                </Table.Cell>
+                            </Table.Row>
+                            <Table.Row>
+                                <Table.Cell>
+                                    Status
+			     </Table.Cell>
+                                <Table.Cell>
+                                    {GameStateMsg[server.gameState]}
+                                </Table.Cell>
+                            </Table.Row>
+                            {server.errorMsg &&
+                                (<Table.Row>
+                                    <Table.Cell>
+                                        Problem
+			      </Table.Cell>
+                                    <Table.Cell>
+                                        {server.errorMsg}
+                                    </Table.Cell>
+                                </Table.Row>)
+                            }
+                            </>)
+                    }
+                </Table.Body>
             </Table>
         )
     }

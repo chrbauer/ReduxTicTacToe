@@ -7,7 +7,7 @@ export enum ServerState {
 
 
 export enum GameState {
-    Playing, Finished, Waiting
+    Playing, Finished, Waiting, FindMatch, Error
 }
 
 
@@ -16,7 +16,7 @@ export interface Server {
     game: number;
     myturn: boolean;
     gameState: GameState;
-    myColor: Player;
+    player: Player;
     state: ServerState;
     errorMsg: string;
 }
@@ -26,7 +26,7 @@ export const initialServer: Server = {
     myturn: false,
     game: -1,
     gameState: GameState.Waiting,
-    myColor: PlayerX,
+    player: PlayerX,
     state: ServerState.NotConnected,
     errorMsg: ""
 }
