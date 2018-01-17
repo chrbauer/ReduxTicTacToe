@@ -19,7 +19,7 @@ const server = handleActions({
         ...payload,
         gameState: GameState.Playing,
         connected: true,
-        myturn: payload!.player === PlayerX
+        colorToMove: PlayerX
     }),
     FINDMATCH_FAILED: (server, { payload }) => ({
         ...server,
