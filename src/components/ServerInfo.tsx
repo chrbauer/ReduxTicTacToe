@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { Table } from 'semantic-ui-react'
 //import { Phase, Board } from '../logic/Logic';
-import { Server } from '../logic/Server';
+import { Server, GameState } from '../logic/Server';
 
 export interface Props {
     server: Server;
 }
+
+const GameStateMsg = {
+    [GameState.Playing]: "Spiel l‰uft...",
+    [GameState.Waiting]: "",
+    [GameState.Playing]: "Spiel ist beendent"
+}
+
 
 class ServerInfo extends React.Component<Props, object> {
     render() {
@@ -25,26 +32,27 @@ class ServerInfo extends React.Component<Props, object> {
                         Am Zug
 		    </Table.Cell>
                     <Table.Cell>
-                        Du
-		    </Table.Cell>
+                        {server.myturn ? "Du" : "Gegner"}
+                    </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>
                         Status
 		    </Table.Cell>
                     <Table.Cell>
-                        Spiel l√§uft
-		    </Table.Cell>
+                        {GameStateMsg[server.gameState]}
+                    </Table.Cell>
                 </Table.Row>
-
-                <Table.Row>
-                    <Table.Cell>
-                        Problem
+                {server.errorMsg &&
+                    (<Table.Row>
+                        <Table.Cell>
+                            Problem
 		    </Table.Cell>
-                    <Table.Cell>
-                        Kein Problem
+                        <Table.Cell>
+                            {server.errorMsg}
 		    </Table.Cell>
-                </Table.Row>
+                    </Table.Row>)
+                }
             </Table>
         )
     }
