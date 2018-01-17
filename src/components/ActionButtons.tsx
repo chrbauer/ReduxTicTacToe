@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Server, ServerState } from '../logic/Server';
-import { Button } from 'semantic-ui-react'
+import { Button, List } from 'semantic-ui-react'
 
 export interface Props {
     server: Server;
@@ -12,22 +12,26 @@ export interface Props {
 
 class ActionButtons extends React.Component<Props, object> {
 
-  render() {
-    const p = this.props;
-    return (
-	    <div>
-	                <Button
-  	       loading={p.server.state === ServerState.Searching}
- 	       label="New Game"
-	       onClick={p.onNewGame} />
-            <Button
-  	       loading={p.server.state === ServerState.Searching}
- 	       label="Find Match"
-	       onClick={p.onFindMatch} />
-      </div>
-    );
-  }
-
+    render() {
+        const p = this.props;
+        return (
+            <List>
+                <List.Item>
+                    <Button
+                        icon="game"
+                        label="New Game"
+                        onClick={p.onNewGame} />
+                </List.Item>
+                <List.Item>
+                    <Button
+                        loading={p.server.state === ServerState.Searching}
+                        icon="plug"
+                        label="Find Match"
+                        onClick={p.onFindMatch} />
+                </List.Item>
+            </List>
+        );
+    }
 }
 
 export default ActionButtons

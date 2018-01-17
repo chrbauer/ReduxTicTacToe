@@ -3,7 +3,7 @@ import * as React from 'react';
 import ActionButtons from './containers/ActionButtons';
 import Board from './containers/Board';
 import BoardPhase from './containers/BoardPhase';
-
+import ServerInfo from './containers/ServerInfo';
 
 import './App.css';
 
@@ -31,7 +31,7 @@ class App extends React.Component {
 	    </Grid.Column>
 	    
 	    <Grid.Column>
-              XXX
+	      <ServerInfo />
 	    </Grid.Column>
 	    </Grid.Row>
 	    <Grid.Row>
