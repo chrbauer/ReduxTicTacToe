@@ -76,6 +76,16 @@ function setMarker(gameState, idx) {
     }
 }
 
+function resign(gameState, player) {
+    gameState.resign = player;
+    const observers = gameState.observers;
+    gameState.observers = [];
+    for (let obs of observers) {
+        sendMove(obs.res, gameState, gameState.moves.length);
+    }
+}
+
+
 function delayObserverResponse(gameState, obs, getmove) {
     gameState.observers.push({ getmove, res: obs });
 }
@@ -100,14 +110,16 @@ app.post('/game/:num', function(req, res) {
                 sendMove(res, gameState, moveIdx);
             }
             return;
+        } else if (req.body.resign && ttt.players.indexOf(req.body.color) != -1) {
+            const moveIdx = gameState.moves.length;
+            resign(gameState, req.body.color);
+            sendMove(res, gameState, moveIdx);
         }
         res.status(400).send({ message: "invalid request" });
     } else {
         res.status(404).send({ message: "no such game" })
     }
 });
-
-
 
 const server = app.listen(3333, function() {
     console.log('TTT Server listening on port 3333!');
