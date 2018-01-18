@@ -19,7 +19,5 @@ export const initialServer: Server = {
     onlineState: OnlineState.NotPlaying,
     player: PlayerX,
     colorToMove: PlayerX,
-    errorMsg: ""
-}
-
-
+    errorMsg: ''
+};

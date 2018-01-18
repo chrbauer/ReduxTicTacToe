@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Table } from 'semantic-ui-react'
-//import { Phase, Board } from '../logic/Logic';
-import { FieldValue } from '../logic/Logic';
+import { Table } from 'semantic-ui-react';
+import { FieldValue } from '../logic/TicTacToe';
 import { Server, OnlineState } from '../logic/Server';
 
 export interface Props {
@@ -9,25 +8,28 @@ export interface Props {
 }
 
 const OnlineStateMsg = {
-    [OnlineState.Playing]: "Spiel läuft...",
-    [OnlineState.NotPlaying]: "",
-    [OnlineState.FindMatch]: "Search for partner....",
-    [OnlineState.Error]: "Server error"
-}
-
+    [OnlineState.Playing]: 'Game in progress...',
+    [OnlineState.NotPlaying]: '',
+    [OnlineState.FindMatch]: 'Search for partner....',
+    [OnlineState.Error]: 'Server error'
+};
 
 class ServerInfo extends React.Component<Props, object> {
     render() {
         const { server } = this.props;
+        let playerToMove = '';
+        if (server.onlineState === OnlineState.Playing) {
+            playerToMove = server.player === server.colorToMove ? 'Du' : 'Gegner';
+        }
         return (
             <Table>
                 <Table.Body>
                     <Table.Row>
                         <Table.Cell>
                             Mode
-			</Table.Cell>
+                        </Table.Cell>
                         <Table.Cell>
-                            {server.connected ? "Online" : "Offline"}
+                            {server.connected ? 'Online' : 'Offline'}
                         </Table.Cell>
                     </Table.Row>
                     {server.connected &&
@@ -35,7 +37,7 @@ class ServerInfo extends React.Component<Props, object> {
                             <Table.Row>
                                 <Table.Cell>
                                     Deine Farbe
-			     </Table.Cell>
+                             </Table.Cell>
                                 <Table.Cell>
                                     {FieldValue[server.player]}
                                 </Table.Cell>
@@ -43,15 +45,15 @@ class ServerInfo extends React.Component<Props, object> {
                             <Table.Row>
                                 <Table.Cell>
                                     Am Zug
-			     </Table.Cell>
+                             </Table.Cell>
                                 <Table.Cell>
-                                    {server.onlineState === OnlineState.Playing ? (server.player === server.colorToMove ? "Du" : "Gegner") : ""}
+                                    {playerToMove}
                                 </Table.Cell>
                             </Table.Row>
                             <Table.Row>
                                 <Table.Cell>
                                     Status
-			     </Table.Cell>
+                             </Table.Cell>
                                 <Table.Cell>
                                     {OnlineStateMsg[server.onlineState]}
                                 </Table.Cell>
@@ -60,7 +62,7 @@ class ServerInfo extends React.Component<Props, object> {
                                 (<Table.Row>
                                     <Table.Cell>
                                         Problem
-			      </Table.Cell>
+                              </Table.Cell>
                                     <Table.Cell>
                                         {server.errorMsg}
                                     </Table.Cell>
@@ -70,8 +72,8 @@ class ServerInfo extends React.Component<Props, object> {
                     }
                 </Table.Body>
             </Table>
-        )
+        );
     }
 }
 
-export default ServerInfo
+export default ServerInfo;

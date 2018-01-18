@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Message } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react';
 import { Phase, Board } from '../logic/TicTacToe';
 
 export interface Props {
@@ -7,12 +7,12 @@ export interface Props {
 }
 
 const Messages = {
-    [Phase.NotStarted]: "Das Spiel hat noch nicht begonnen.",
-    [Phase.Playing]: "Das Spiel läuft aktuell noch...",
-    [Phase.WinX]: "X hat gewonnen",
-    [Phase.WinO]: "O hat gewonnen",
-    [Phase.Draw]: "Unentschieden!"
-}
+    [Phase.NotStarted]: 'Das Spiel hat noch nicht begonnen.',
+    [Phase.Playing]: 'Das Spiel läuft aktuell noch...',
+    [Phase.WinX]: 'X hat gewonnen',
+    [Phase.WinO]: 'O hat gewonnen',
+    [Phase.Draw]: 'Unentschieden!'
+};
 
 class BoardPhase extends React.Component<Props, object> {
     render() {
@@ -25,4 +25,4 @@ class BoardPhase extends React.Component<Props, object> {
 
 }
 
-export default BoardPhase
+export default BoardPhase;

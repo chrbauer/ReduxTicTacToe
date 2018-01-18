@@ -15,10 +15,16 @@ export interface Props {
 class Field extends React.Component<Props, object> {
     render() {
         const { x, y, value } = this.props;
-	const isEmpty = value === logic.FieldValue.Empty;
+        const isEmpty = value === logic.FieldValue.Empty;
         return (
             <g transform={`translate(${x * FIELD_SIZE}, ${y * FIELD_SIZE})`} >
-                <rect fill="transparent" stroke="none" width={FIELD_SIZE} height={FIELD_SIZE} onClick={ isEmpty && this.props.onClick || undefined} />
+                <rect
+                    fill="transparent"
+                    stroke="none"
+                    width={FIELD_SIZE}
+                    height={FIELD_SIZE}
+                    onClick={isEmpty && this.props.onClick || undefined}
+                />
                 {value === logic.FieldValue.O ? <Circle /> : (value === logic.FieldValue.X ? <Cross /> : null)}
             </g>
         );

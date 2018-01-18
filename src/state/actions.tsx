@@ -63,4 +63,4 @@ export const asyncActions = {
 } as any;
 
 
-export default actions
+export default actions;

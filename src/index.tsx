@@ -2,36 +2,32 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
 
-import { createStore, applyMiddleware  } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { StoreState } from './state/types';
 
 // Middlewares
-import { createLogger } from 'redux-logger'
-import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 
 import registerServiceWorker from './registerServiceWorker';
-
-
 import { rootReducer } from './state/reducers';
 
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
-
-const loggerMiddleware = createLogger()
-
-const store = createStore<StoreState|undefined>(rootReducer as any, undefined, applyMiddleware(
-     thunkMiddleware,
-     loggerMiddleware
-   )
-)
-  
+const loggerMiddleware = createLogger();
+const store = createStore<StoreState | undefined>(rootReducer as any, undefined, applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+));
 
 ReactDOM.render(
- <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root') as HTMLElement
+    (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    ),
+    document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

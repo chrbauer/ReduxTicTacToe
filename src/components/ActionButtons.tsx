@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Server, OnlineState } from '../logic/Server';
-import { Button, List } from 'semantic-ui-react'
+import { Button, List } from 'semantic-ui-react';
 
 export interface Props {
     server: Server;
@@ -10,9 +10,7 @@ export interface Props {
     onResign: () => void;
 }
 
-
 class ActionButtons extends React.Component<Props, object> {
-
     render() {
         const p = this.props;
         return (
@@ -23,7 +21,8 @@ class ActionButtons extends React.Component<Props, object> {
                         disabled={p.server.connected && p.server.onlineState !== OnlineState.NotPlaying}
                         primary={p.server.connected && p.server.onlineState === OnlineState.NotPlaying}
                         label="New Game"
-                        onClick={p.onNewGame} />
+                        onClick={p.onNewGame}
+                    />
                 </List.Item>
                 <List.Item>
                     <Button
@@ -31,19 +30,21 @@ class ActionButtons extends React.Component<Props, object> {
                         disabled={p.server.onlineState !== OnlineState.NotPlaying}
                         icon="plug"
                         label="Find Match"
-                        onClick={p.onFindMatch} />
+                        onClick={p.onFindMatch}
+                    />
                 </List.Item>
                 <List.Item>
                     <Button
                         disabled={p.server.onlineState !== OnlineState.Playing}
                         negative={true}
                         icon="frown"
-                        label="Aufgeben"
-                        onClick={p.onResign} />
+                        label="Resign"
+                        onClick={p.onResign}
+                    />
                 </List.Item>
             </List>
         );
     }
 }
 
-export default ActionButtons
+export default ActionButtons;

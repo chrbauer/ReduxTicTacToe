@@ -5,18 +5,16 @@ import { connect, Dispatch } from 'react-redux';
 import * as ttt from '../logic/TicTacToe';
 import { Server } from '../logic/Server';
 
-const mapStateToProps = ({ board, server }: StoreState) => ({ board, server })
-
+const mapStateToProps = ({ board, server }: StoreState) => ({ board, server });
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     onSet: (idx: number, server: Server, board: ttt.Board) => {
         if (!server.connected) {
-            dispatch(actions.set(idx))
+            dispatch(actions.set(idx));
         } else if (server.player === board.colorToMove) {
             dispatch(asyncActions.send(server.game, idx, board.colorToMove));
         }
     }
-})
-
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board as any);
