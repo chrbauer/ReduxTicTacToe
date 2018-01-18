@@ -57,7 +57,7 @@ function sendMove(res, gameState, moveIdx) {
     sendJSON(res, {
         move: gameState.moves[moveIdx],
         colorToMove: gameState.board.colorToMove,
-        done: gameState.resigned !== ttt.Nobody && !ttt.isEditable(gameState.board),
+        done: gameState.resigned !== ttt.Nobody || !ttt.isEditable(gameState.board),
         resigned: gameState.resigned
     });
 }
@@ -79,21 +79,6 @@ function setMarker(gameState, idx) {
 function delayObserverResponse(gameState, obs, getmove) {
     gameState.observers.push({ getmove, res: obs });
 }
-
-app.get('/game/:num', function(req, res) {
-    const game = req.params.num;
-    if (game >= 0 && game < games.length) {
-        const gameState = games[game];
-        const moveIdx = req.body.getmove;
-        if (moveIdx && moveIdx >= game.moves.length) {
-            delayObserverResponse(res, gameState, moveIdx);
-        } else {
-            sendMove(res, gameState, moveIdx);
-        }
-    } else {
-        res.status(404).send({ message: "no such game" })
-    }
-});
 
 app.post('/game/:num', function(req, res) {
     const game = req.params.num;
