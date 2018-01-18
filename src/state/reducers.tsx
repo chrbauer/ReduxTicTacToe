@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from "redux";
 
 import { StoreState } from './types';
-import { Board, Player, PlayerX, initialBoard, updateBoard } from '../logic/Logic';
+import { Board, Player, PlayerX, initialBoard, updateBoard } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
 const board = handleActions({

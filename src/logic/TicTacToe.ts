@@ -11,6 +11,7 @@ export type Player = FieldValue.X | FieldValue.O;
 
 export const PlayerX = FieldValue.X;
 export const PlayerO = FieldValue.O;
+export const Nobody = FieldValue.Empty;
 
 export enum Phase {
     NotStarted, Playing, WinX, WinO, Draw

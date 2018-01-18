@@ -4,17 +4,13 @@ import { createActions } from 'redux-actions';
 import { createActionThunk } from 'redux-thunk-actions';
 import { Dispatch } from "redux";
 import { SERVER_URI } from '../constants/Server';
-import { Player } from '../logic/Logic';
+import { Player } from '../logic/TicTacToe';
 import { StoreState } from './types';
 
 export const actions = createActions({
     NEW: undefined,
     SET: undefined,
 });
-
-
-
-
 
 export const asyncActions = {
     findmatch: createActionThunk('FINDMATCH',

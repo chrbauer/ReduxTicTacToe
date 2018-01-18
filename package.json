@@ -23,7 +23,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
       "eject": "react-scripts-ts eject",
-      "server:watch": "tsc -watch  ./server/index.ts"
+      "server:watch": "tsc -watch  ./src/logic/TicTacToe.ts ./server/index.ts"
       
   },
   "devDependencies": {

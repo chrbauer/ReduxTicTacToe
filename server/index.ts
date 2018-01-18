@@ -1,8 +1,11 @@
+/// <reference types="node" />
+
+// required modules
 const express = require('express');
 const bodyParser = require("body-parser");
-const app = express();
+const ttt = require('../src/logic/TicTacToe');
 
-const logic = require('../src/logic/Logic');
+const app = express();
 
 let room = {
     partner: null
@@ -10,7 +13,7 @@ let room = {
 
 let games = [];
 
-function sendJSON(res, obj) {
+function sendJSON(res, obj: object): void {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(obj));
 }
@@ -24,26 +27,24 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.post('/findmatch', function(req, res) {
     if (room.partner != null) {
-        console.log("Found Match");
         const game = games.length;
         const initialGameState = {
             moves: [],
-            board: logic.initialBoard,
-            colorToMove: 'X',
-            state: "P",
-            observers: []
+            board: ttt.initialBoard,
+            colorToMove: ttt.playerX,
+            observers: [],
+            resigned: ttt.Nobody
         };
         games.push(initialGameState);
         sendJSON(room.partner, {
             game,
-            player: logic.PlayerX
+            player: ttt.PlayerX
         });
         sendJSON(res, {
             game,
-            player: logic.PlayerO
+            player: ttt.PlayerO
         });
         room.partner = null;
     } else {
@@ -52,69 +53,70 @@ app.post('/findmatch', function(req, res) {
     }
 });
 
+function sendMove(res, gameState, moveIdx) {
+    sendJSON(res, {
+        move: gameState.moves[moveIdx],
+        colorToMove: gameState.board.colorToMove,
+        done: gameState.resigned !== ttt.Nobody && !ttt.isEditable(gameState.board),
+        resigned: gameState.resigned
+    });
+}
 
+function setMarker(gameState, idx) {
+    gameState.moves.push(idx);
+    gameState.board = ttt.updateBoard(gameState.board, idx);
+    const observers = gameState.observers;
+    gameState.observers = [];
+    for (let obs of observers) {
+        if (gameState.moves.length > obs.getmove) {
+            sendMove(obs.res, gameState, obs.getmove);
+        } else {
+            gameState.observers.push(obs);
+        }
+    }
+}
+
+function delayObserverResponse(gameState, obs, getmove) {
+    gameState.observers.push({ getmove, res: obs });
+}
 
 app.get('/game/:num', function(req, res) {
     const game = req.params.num;
     if (game >= 0 && game < games.length) {
         const gameState = games[game];
-        if (req.body.move && req.body.move >= game.moves.length) {
-            game.observer.push(res);
+        const moveIdx = req.body.getmove;
+        if (moveIdx && moveIdx >= game.moves.length) {
+            delayObserverResponse(res, gameState, moveIdx);
         } else {
-            res.status(200).send(JSON.stringify({
-                move: gameState.moves[req.body.move],
-                done: false
-            }));
+            sendMove(res, gameState, moveIdx);
         }
     } else {
         res.status(404).send({ message: "no such game" })
     }
 });
 
-
 app.post('/game/:num', function(req, res) {
     const game = req.params.num;
     if (game >= 0 && game < games.length) {
         const gameState = games[game];
-        console.log("B", req.body, gameState);
+
         if (req.body.set != null) {
-            console.log("body", req.body);
-            if (true || req.body.color === gameState.colorToMove) {
-                gameState.moves.push(req.body.set);
-                gameState.board = logic.updateBoard(gameState.board, req.body.set);
-                const observers = gameState.observers;
-                gameState.observers = [];
-                console.log(" obs count", observers.length);
-                for (let obs of observers) {
-                    console.log("resp to obs", obs.getmove);
-                    if (gameState.moves.length > obs.getmove) {
-                        obs.res.status(200).send(JSON.stringify({
-                            move: gameState.moves[obs.getmove],
-                            colorToMove: gameState.board.colorToMove,
-                            done: !logic.isEditable(gameState.board)
-                        }));
-                    } else {
-                        gameState.observers.push(obs);
-                    }
-                }
+            if (req.body.color === gameState.board.colorToMove) {
+                const moveIdx = gameState.moves.length;
+                setMarker(gameState, req.body.set);
+                sendMove(res, gameState, moveIdx);
+                return;
             }
-            sendJSON(res, { ok: 1 });
         } else if (req.body.getmove != null) {
-            console.log("C");
-            if (req.body.getmove >= gameState.moves.length) {
-                console.log("push");
-                gameState.observers.push({ getmove: req.body.getmove, player: req.body.player, res });
+            const moveIdx = req.body.getmove;
+            if (moveIdx >= gameState.moves.length) {
+                delayObserverResponse(gameState, res, moveIdx);
             } else {
-                console.log("resp");
-                sendJSON(res, JSON.stringify({
-                    move: gameState.moves[req.body.getmove],
-                    colorToMove: gameState.board.colorToMove,
-                    done: !logic.isEditable(gameState.board)
-                }));
+                sendMove(res, gameState, moveIdx);
             }
-        } else {
-            console.log("D");
+            return;
         }
+        res.status(400).send({ message: "invalid request" });
     } else {
         res.status(404).send({ message: "no such game" })
     }
@@ -127,5 +129,5 @@ const server = app.listen(3333, function() {
 });
 
 
-server.timeout = 1000 * 60 * 60; // 1h
-console.log("Ready");
+server.timeout = 1000 * 60 * 60; // 1h >= duration(IT_Talk)
+console.log("Started");

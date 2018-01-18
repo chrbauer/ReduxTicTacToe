@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { BOARD_SIZE, BOARD_PADDING, FIELD_SIZE } from '../constants/Layout';
 import Field from './Field';
-import * as logic from '../logic/Logic';
+import * as ttt from '../logic/TicTacToe';
 import * as server from '../logic/Server';
 import './Board.css';
 
 export interface Props {
-    board: logic.Board;
+    board: ttt.Board;
     server: server.Server;
-    onSet: (idx: number, server: server.Server, board: logic.Board) => void;
+    onSet: (idx: number, server: server.Server, board: ttt.Board) => void;
 }
 
 const TTTGrid = () => {
@@ -27,7 +27,6 @@ const TTTGrid = () => {
 class Board extends React.Component<Props, object> {
     render() {
         const { board, server } = this.props;
-
         const svgSize = BOARD_SIZE + 2 * BOARD_PADDING;
 
         return (
@@ -35,8 +34,8 @@ class Board extends React.Component<Props, object> {
             <svg width={svgSize} height={svgSize} >
                 <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
                     <TTTGrid />
-                    {board.fields.map((value: logic.FieldValue, idx: number) => (
-                        <Field x={logic.column(idx)} y={logic.row(idx)} value={value} onClick={() => this.props.onSet(idx, server, board)} />
+                    {board.fields.map((value: ttt.FieldValue, idx: number) => (
+                        <Field x={ttt.column(idx)} y={ttt.row(idx)} value={value} onClick={() => this.props.onSet(idx, server, board)} />
                     ))}
                 </g>
             </svg>

@@ -1,9 +1,8 @@
-import { Player, PlayerX } from './Logic';
+import { Player, PlayerX } from './TicTacToe';
 
 export enum OnlineState {
     Playing, NotPlaying, FindMatch, Error
 }
-
 
 export interface Server {
     connected: boolean;
