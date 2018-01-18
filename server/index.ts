@@ -33,18 +33,18 @@ app.post('/findmatch', function(req, res) {
         const initialGameState = {
             moves: [],
             board: ttt.initialBoard,
-            colorToMove: ttt.playerX,
+            colorToMove: ttt.Player.X,
             observers: [],
             resigned: ttt.Nobody
         };
         games.push(initialGameState);
         sendJSON(room.partner, {
             game,
-            player: ttt.PlayerX
+            player: ttt.Player.X
         });
         sendJSON(res, {
             game,
-            player: ttt.PlayerO
+            player: ttt.Player.O
         });
         room.partner = null;
     } else {

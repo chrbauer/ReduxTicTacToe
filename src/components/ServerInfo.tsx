@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
-import { FieldValue } from '../logic/TicTacToe';
+import { Player } from '../logic/TicTacToe';
 import { Server, OnlineState } from '../logic/Server';
 
 export interface Props {
@@ -39,7 +39,7 @@ class ServerInfo extends React.Component<Props, object> {
                                     Deine Farbe
                              </Table.Cell>
                                 <Table.Cell>
-                                    {FieldValue[server.player]}
+                                    {Player[server.player]}
                                 </Table.Cell>
                             </Table.Row>
                             <Table.Row>
@@ -58,6 +58,16 @@ class ServerInfo extends React.Component<Props, object> {
                                     {OnlineStateMsg[server.onlineState]}
                                 </Table.Cell>
                             </Table.Row>
+                            {server.resigned !== Player.Nobody &&
+                                (<Table.Row>
+                                    <Table.Cell>
+                                        Resigned
+                              </Table.Cell>
+                                    <Table.Cell>
+                                        {Player[server.resigned]}
+                                    </Table.Cell>
+                                </Table.Row>)
+                            }
                             {server.errorMsg &&
                                 (<Table.Row>
                                     <Table.Cell>

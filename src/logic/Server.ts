@@ -1,4 +1,4 @@
-import { Player, PlayerX } from './TicTacToe';
+import { Player } from './TicTacToe';
 
 export enum OnlineState {
     Playing, NotPlaying, FindMatch, Error
@@ -11,13 +11,15 @@ export interface Server {
     player: Player;
     colorToMove: Player;
     errorMsg: string;
+    resigned: Player;
 }
 
 export const initialServer: Server = {
     connected: false,
     game: -1,
     onlineState: OnlineState.NotPlaying,
-    player: PlayerX,
-    colorToMove: PlayerX,
-    errorMsg: ''
+    player: Player.X,
+    colorToMove: Player.X,
+    errorMsg: '',
+    resigned: Player.Nobody
 };

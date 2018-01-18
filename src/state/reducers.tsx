@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 
 import { StoreState } from './types';
-import { Board, Player, PlayerX, initialBoard, updateBoard } from '../logic/TicTacToe';
+import { Board, Player, initialBoard, updateBoard } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
 const boardReducer = handleActions(
@@ -22,7 +22,7 @@ const serverReducer = handleActions(
             ...payload,
             onlineState: OnlineState.Playing,
             connected: true,
-            colorToMove: PlayerX
+            colorToMove: Player.X
         }),
         FINDMATCH_FAILED: (server, { payload }) => ({
             ...server,
@@ -38,7 +38,8 @@ const serverReducer = handleActions(
         FOLLOWGAME_SUCCEEDED: (server, { payload }: any) => ({
             ...server,
             colorToMove: payload.colorToMove,
-            onlineState: payload.done ? OnlineState.NotPlaying : server.onlineState
+            onlineState: payload.done ? OnlineState.NotPlaying : server.onlineState,
+            resigned: payload.resigned
         })
     },
     initialServer

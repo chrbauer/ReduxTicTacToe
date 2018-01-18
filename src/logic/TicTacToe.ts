@@ -3,22 +3,17 @@ import { List } from 'immutable';
 
 export const COLUMNS = 3;
 
-export enum FieldValue {
-    Empty, X, O
+export enum Player {
+    Nobody, X, O
 }
 
-export type Player = FieldValue.X | FieldValue.O;
-
-export const PlayerX = FieldValue.X;
-export const PlayerO = FieldValue.O;
-export const Nobody = FieldValue.Empty;
-export const Players = [PlayerX, PlayerO];
+export const Players = [Player.X, Player.O];
 
 export enum Phase {
     NotStarted, Playing, WinX, WinO, Draw
 }
 
-export type Fields = List<FieldValue>;
+export type Fields = List<Player>;
 export interface Board {
     fields: Fields;
     colorToMove: Player;
@@ -26,14 +21,14 @@ export interface Board {
 }
 
 export const initialBoard: Board = {
-    fields: Repeat(FieldValue.Empty, 9).toList(),
-    colorToMove: FieldValue.X,
+    fields: Repeat(Player.Nobody, 9).toList(),
+    colorToMove: Player.X,
     phase: Phase.NotStarted
 };
 
 export const updateBoard = (board: Board, idx: number) => {
     const { fields, colorToMove } = board;
-    if (isEditable(board) && fields.get(idx) === FieldValue.Empty) {
+    if (isEditable(board) && fields.get(idx) === Player.Nobody) {
         const newFields = fields.set(idx, colorToMove);
         return {
             fields: newFields,
@@ -44,7 +39,7 @@ export const updateBoard = (board: Board, idx: number) => {
     return board;
 };
 
-export const flipColorToMove = (color: Player) => color === FieldValue.X ? FieldValue.O : FieldValue.X;
+export const flipColorToMove = (color: Player) => color === Player.X ? Player.O : Player.X;
 
 export const column = (idx: number): number => idx % COLUMNS;
 export const row = (idx: number): number => ~~(idx / COLUMNS);
@@ -66,14 +61,14 @@ const checkWin = (fields: Fields, player: Player) => {
         checkWinOneCond(fields, player, isDiag2, true);
 };
 
-const isEmpty = (field: FieldValue) => field === FieldValue.Empty;
+const isEmpty = (field: Player) => field === Player.Nobody;
 
-export const phaseOfBoard = (fields: List<FieldValue>) => {
+export const phaseOfBoard = (fields: List<Player>) => {
     if (fields.every(isEmpty)) {
         return Phase.NotStarted;
-    } else if (checkWin(fields, FieldValue.X)) {
+    } else if (checkWin(fields, Player.X)) {
         return Phase.WinX;
-    } else if (checkWin(fields, FieldValue.O)) {
+    } else if (checkWin(fields, Player.O)) {
         return Phase.WinO;
     } else if (!fields.some(isEmpty)) {
         return Phase.Draw;

@@ -34,7 +34,7 @@ class Board extends React.Component<Props, object> {
             <svg width={svgSize} height={svgSize} >
                 <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
                     <TTTGrid />
-                    {board.fields.map((value: ttt.FieldValue, idx: number) => (
+                    {board.fields.map((value: ttt.Player, idx: number) => (
                         <Field
                             key={idx}
                             x={ttt.column(idx)}
