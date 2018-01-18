@@ -77,7 +77,7 @@ function setMarker(gameState, idx) {
 }
 
 function resign(gameState, player) {
-    gameState.resign = player;
+    gameState.resigned = player;
     const observers = gameState.observers;
     gameState.observers = [];
     for (let obs of observers) {
@@ -110,10 +110,11 @@ app.post('/game/:num', function(req, res) {
                 sendMove(res, gameState, moveIdx);
             }
             return;
-        } else if (req.body.resign && ttt.players.indexOf(req.body.color) != -1) {
+        } else if (req.body.resign && ttt.Players.indexOf(req.body.color) !== -1) {
             const moveIdx = gameState.moves.length;
             resign(gameState, req.body.color);
             sendMove(res, gameState, moveIdx);
+            return;
         }
         res.status(400).send({ message: "invalid request" });
     } else {

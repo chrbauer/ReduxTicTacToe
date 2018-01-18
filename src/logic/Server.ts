@@ -44,3 +44,6 @@ export const followGame = (game: number, getmove: number, player: Player): Promi
 export const sendMove = (game: number, set: number, color: Player): Promise<JSON> =>
     queryGame(game, { color, set });
 
+export const resign = (game: number, color: Player): Promise<JSON> =>
+    queryGame(game, { resign: true, color });
+

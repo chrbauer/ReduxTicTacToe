@@ -4,7 +4,6 @@ import { createActions } from 'redux-actions';
 import { createActionThunk } from 'redux-thunk-actions';
 import { Dispatch } from "redux";
 
-import { Player } from '../logic/TicTacToe';
 import { StoreState } from './types';
 
 import * as server from '../logic/Server';
@@ -34,7 +33,6 @@ export const asyncActions = {
         (game: number, move: number, { dispatch, getState }: AsyncActionMetaData) =>
             server.followGame(game, move, getState().server.player)
                 .then(sideeffect((response: any) => {
-                    console.log("resp", response);
                     dispatch(actions.set(response.move));
                     if (!response.done) {
                         dispatch(asyncActions.followGame(game, move + 1));
@@ -42,8 +40,13 @@ export const asyncActions = {
                 }))
     ),
     send: createActionThunk('SEND',
-        (game: number, index: number, color: Player, { getState }: AsyncActionMetaData) => {
-            server.sendMove(game, index, getState().server.player)
+        (game: number, index: number, { getState }: AsyncActionMetaData) => {
+            server.sendMove(game, index, getState().server.player);
+        }),
+    resign: createActionThunk('RESIGN',
+        ({ getState }: AsyncActionMetaData) => {
+            const state = getState();
+            server.resign(state.server.game, state.server.player);
         })
 } as any;
 
