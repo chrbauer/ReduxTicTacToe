@@ -4,4 +4,4 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = ({ board }: StoreState) => ({ board });
 
-export default connect(mapStateToProps)(BoardPhase as any);
+export default connect(mapStateToProps)(BoardPhase);

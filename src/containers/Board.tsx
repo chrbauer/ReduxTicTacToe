@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board as any);
+export default connect(mapStateToProps, mapDispatchToProps)(Board);
