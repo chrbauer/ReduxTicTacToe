@@ -8,21 +8,20 @@ import { StoreState } from './types';
 
 import * as server from '../logic/Server';
 
+interface AsyncActionMetaData {
+    dispatch: Dispatch<any>;
+    getState: () => StoreState;
+}
+
 export const actions = createActions({
     NEW: undefined,
     SET: undefined,
 });
 
 const sideeffect = (f: ((r: JSON) => void)) => (arg: JSON) => {
-    console.log("arg", arg);
     f(arg);
     return arg;
 };
-
-interface AsyncActionMetaData {
-    dispatch: Dispatch<any>;
-    getState: () => StoreState;
-}
 
 export const asyncActions = {
     findmatch: createActionThunk('FINDMATCH',

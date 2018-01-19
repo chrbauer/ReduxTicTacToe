@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
         if (!server.connected) {
             dispatch(actions.set(idx));
         } else if (server.player === board.colorToMove) {
-            dispatch(asyncActions.send(server.game, idx, board.colorToMove));
+            dispatch(asyncActions.send(server.game, idx));
         }
     }
 });
