@@ -4,7 +4,7 @@ import App from './App';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import { StoreState } from './state/types';
+import { StoreState, Optional } from './state/types';
 
 // Middlewares
 import { createLogger } from 'redux-logger';
@@ -16,9 +16,9 @@ import { rootReducer } from './state/reducers';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
-
 const loggerMiddleware = createLogger();
-const store = createStore<StoreState | undefined>(rootReducer as any, undefined, applyMiddleware(
+
+const store = createStore<Optional<StoreState>>(rootReducer, undefined, applyMiddleware(
     thunkMiddleware,
     loggerMiddleware
 ));

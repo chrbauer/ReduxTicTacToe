@@ -1,15 +1,17 @@
-import { handleActions } from 'redux-actions';
-import { combineReducers } from 'redux';
+import { handleActions, ActionMeta } from 'redux-actions';
+import { combineReducers, Reducer } from 'redux';
 
 import { StoreState } from './types';
 import { Board, Player, initialBoard, updateBoard } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
+
+
 const boardReducer = handleActions(
     {
-        SET: ((board: Board, action: { payload: number }) => updateBoard(board, action.payload)) as any,
-        NEW: ((board: Board, action: { payload: number }) => initialBoard) as any,
-        FINDMATCH_SUCCEEDED: ((board: Board, action: { payload: number }) => initialBoard) as any
+        SET: ((board: Board, action: ActionMeta<number, {}>) => updateBoard(board, action.payload || 0)),
+        NEW: ((board: Board) => initialBoard),
+        FINDMATCH_SUCCEEDED: ((board: Board) => initialBoard)
     },
     initialBoard
 );
@@ -45,10 +47,9 @@ const serverReducer = handleActions(
     initialServer
 );
 
-type Action = any;
-type RootReducer = (state: StoreState) => (action: Action) => StoreState;
+export type RootReducer = Reducer<StoreState>;
 
 export const rootReducer: RootReducer = combineReducers({
     board: boardReducer,
     server: serverReducer
-}) as RootReducer;
+});

@@ -26,7 +26,7 @@ export const initialBoard: Board = {
     phase: Phase.NotStarted
 };
 
-export const updateBoard = (board: Board, idx: number) => {
+export const updateBoard = (board: Board, idx: number): Board => {
     const { fields, colorToMove } = board;
     if (isEditable(board) && fields.get(idx) === Player.Nobody) {
         const newFields = fields.set(idx, colorToMove);
@@ -43,24 +43,19 @@ export const flipColorToMove = (color: Player) => color === Player.X ? Player.O 
 
 export const column = (idx: number): number => idx % COLUMNS;
 export const row = (idx: number): number => ~~(idx / COLUMNS);
-export const isDiag1 = (idx: number): boolean => column(idx) === row(idx);
-export const isDiag2 = (idx: number): boolean => 2 - column(idx) === row(idx);
+const onDiag1 = (idx: number): boolean => column(idx) === row(idx);
+const onDiag2 = (idx: number): boolean => 2 - column(idx) === row(idx);
+const count3Marks = (fields: Fields, player: Player, select: (idx: number) => boolean) => fields.filter((field, idx: number) => select(idx) && field === player).count() === 3
+const onRow = (r: number) => (idx: number) => row(idx) === r;
+const onColumn = (c: number) => (idx: number) => column(idx) === c;
+const checkWin = (fields: Fields, player: Player) =>
+    [0, 1, 2].some(rc => count3Marks(fields, player, onRow(rc)) || count3Marks(fields, player, onColumn(rc))) ||
+    count3Marks(fields, player, onDiag1) || count3Marks(fields, player, onDiag2);
+
 
 export const isEditable = (board: Board): boolean => {
     return board.phase === Phase.Playing || board.phase === Phase.NotStarted;
 };
-
-function checkWinOneCond<T>(fields: Fields, player: Player, selector: (n?: number) => T, fixPoint: T) {
-    return fields.filter((field, idx) => selector(idx) === fixPoint && field === player).count() === 3;
-}
-
-const checkWin = (fields: Fields, player: Player) => {
-    const range = [0, 1, 2];
-    return range.some(r => checkWinOneCond(fields, player, row, r) || checkWinOneCond(fields, player, column, r)) ||
-        checkWinOneCond(fields, player, isDiag1, true) ||
-        checkWinOneCond(fields, player, isDiag2, true);
-};
-
 const isEmpty = (field: Player) => field === Player.Nobody;
 
 export const phaseOfBoard = (fields: List<Player>) => {
