@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Loader, Dimmer } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { StoreState } from './state/types';
+import { OnlineState } from './logic/Server';
 
 import ActionButtons from './containers/ActionButtons';
 import Board from './containers/Board';
@@ -10,8 +13,16 @@ import './App.css';
 
 const logo = require('./logo_ittalk.png');
 
-class App extends React.Component {
+
+export interface Props {
+    searching: boolean;
+}
+
+
+class App extends React.Component<Props, object> {
     render() {
+        const { searching } = this.props;
+
         return (
             <div className="App">
                 <div className="App-header">
@@ -24,27 +35,28 @@ class App extends React.Component {
                             <Grid.Column>
                                 <ActionButtons />
                             </Grid.Column>
-
                             <Grid.Column>
-                                <Board />
+                                <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
+                                    marginLeft: "70px"
+                                }} >
+                                    <Dimmer active={searching} blurring={true} inverted={false} >
+                                        <Loader size='massive'>Searching...</Loader>
+                                    </Dimmer>
+                                    <Board />
+                                </Dimmer.Dimmable >
                             </Grid.Column>
-
                             <Grid.Column>
                                 <ServerInfo />
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column />
-                            <Grid.Column>
                                 <BoardPhase />
                             </Grid.Column>
-                            <Grid.Column />
                         </Grid.Row>
                     </Grid>
                 </div>
-            </div>
+            </div >
         );
     }
 }
 
-export default App;
+
+
+export default connect(({ server: { onlineState } }: StoreState) => ({ searching: onlineState === OnlineState.FindMatch }))(App as any)

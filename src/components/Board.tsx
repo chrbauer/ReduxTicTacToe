@@ -30,7 +30,6 @@ class Board extends React.Component<Props, object> {
         const svgSize = BOARD_SIZE + 2 * BOARD_PADDING;
 
         return (
-
             <svg width={svgSize} height={svgSize} >
                 <g transform={`translate(${BOARD_PADDING},${BOARD_PADDING})`}  >
                     <TTTGrid />
@@ -45,7 +44,6 @@ class Board extends React.Component<Props, object> {
                     ))}
                 </g>
             </svg>
-
         );
     }
 }

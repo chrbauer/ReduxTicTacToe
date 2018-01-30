@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Server, OnlineState } from '../logic/Server';
 import { Button, List } from 'semantic-ui-react';
 
+import './ActionButtons.css';
+
 export interface Props {
     server: Server;
     onFindMatch: () => void;
@@ -14,7 +16,7 @@ class ActionButtons extends React.Component<Props, object> {
     render() {
         const p = this.props;
         return (
-            <List>
+            <List id="actionbuttonlist">
                 <List.Item>
                     <Button
                         icon="game"

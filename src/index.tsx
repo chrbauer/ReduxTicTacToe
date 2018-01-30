@@ -16,6 +16,7 @@ import { rootReducer } from './state/reducers';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 
+
 const loggerMiddleware = createLogger();
 const store = createStore<StoreState | undefined>(rootReducer as any, undefined, applyMiddleware(
     thunkMiddleware,
