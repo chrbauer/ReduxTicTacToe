@@ -36,7 +36,13 @@ const query = (route: string, params = {}): Promise<JSON> =>
         body: JSON.stringify(params)
     }).then(response => response.json());
 
-export const findMatch = (): Promise<JSON> => query("findmatch");
+
+export interface FindMatchResponse {
+    game: number;
+}
+
+export const findMatch = (): Promise<FindMatchResponse> => query("findmatch")
+    .then((json: any) => ({ game: json.game }))
 
 const queryGame = (game: number, params: object) => query(`game/${game}`, params);
 export const followGame = (game: number, getmove: number, player: Player): Promise<JSON> =>

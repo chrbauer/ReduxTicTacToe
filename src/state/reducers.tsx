@@ -5,8 +5,6 @@ import { StoreState } from './types';
 import { Board, Player, initialBoard, updateBoard } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
-
-
 const boardReducer = handleActions(
     {
         SET: ((board: Board, action: ActionMeta<number, {}>) => updateBoard(board, action.payload || 0)),

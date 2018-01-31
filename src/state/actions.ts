@@ -18,16 +18,17 @@ export const actions = createActions({
     SET: undefined,
 });
 
-const sideeffect = (f: ((r: JSON) => void)) => (arg: JSON) => {
+const sideeffect = <T>(f: ((r: T) => void)) => (arg: T) => {
     f(arg);
     return arg;
 };
 
 export const asyncActions = {
     findmatch: createActionThunk('FINDMATCH',
-        ({ dispatch }: { dispatch: Dispatch<any> }) =>
+        ({ dispatch }: AsyncActionMetaData) =>
             server.findMatch()
-                .then(sideeffect((response: any) => dispatch(asyncActions.followGame(response.game as number, 0))))) as any,
+                .then(sideeffect((response: server.FindMatchResponse) =>
+                    dispatch(asyncActions.followGame(response.game as number, 0))))),
     followGame: createActionThunk('FOLLOWGAME',
         (game: number, move: number, { dispatch, getState }: AsyncActionMetaData) =>
             server.followGame(game, move, getState().server.player)
@@ -47,7 +48,7 @@ export const asyncActions = {
             const state = getState();
             server.resign(state.server.game, state.server.player);
         })
-} as any;
+};
 
 
 export default actions;
