@@ -25,7 +25,7 @@ export const initialServer: Server = {
     resigned: Player.Nobody
 };
 
-const query = (route: string, params = {}): Promise<JSON> =>
+const query = <Response>(route: string, params = {}): Promise<Response> =>
     fetch(`${SERVER_URI}/${route}`, {
         mode: 'cors',
         headers: {
@@ -36,20 +36,26 @@ const query = (route: string, params = {}): Promise<JSON> =>
         body: JSON.stringify(params)
     }).then(response => response.json());
 
-
 export interface FindMatchResponse {
     game: number;
+    player: Player;
 }
 
-export const findMatch = (): Promise<FindMatchResponse> => query("findmatch")
-    .then((json: any) => ({ game: json.game }))
+export interface MoveResponse {
+    move: number;
+    colorToMove: Player;
+    done: boolean;
+    resigned: Player;
+}
 
-const queryGame = (game: number, params: object) => query(`game/${game}`, params);
-export const followGame = (game: number, getmove: number, player: Player): Promise<JSON> =>
+export const findMatch = (): Promise<FindMatchResponse> => query("findmatch");
+
+const queryGame = (game: number, params: object) => query<MoveResponse>(`game/${game}`, params);
+export const followGame = (game: number, getmove: number, player: Player): Promise<MoveResponse> =>
     queryGame(game, { getmove, player });
-export const sendMove = (game: number, set: number, color: Player): Promise<JSON> =>
+export const sendMove = (game: number, set: number, color: Player): Promise<any> =>
     queryGame(game, { color, set });
 
-export const resign = (game: number, color: Player): Promise<JSON> =>
+export const resign = (game: number, color: Player): Promise<any> =>
     queryGame(game, { resign: true, color });
 
