@@ -31,14 +31,35 @@ class App extends React.Component<Props, object> {
                     <h2>IT Talk Redux TTT</h2>
                 </div>
                 <div className="App-content">
-                    <Grid relaxed={true}>
-                        <Grid.Row>
-                            <Grid.Column width={4}>
+                    <Grid relaxed={false} columns={3}>
+                        <Grid.Row only="computer">
+                            <Grid.Column>
                                 <ActionButtons />
+                            </Grid.Column>
+                            <Grid.Column style={{ minWidth: BOARD_SIZE + 2 * BOARD_PADDING }} >
+                                <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
+                                    marginLeft: "70px"
+                                }} >
+                                    <Dimmer active={searching} blurring inverted={false} >
+                                        <Loader size='massive'>Searching...</Loader>
+                                    </Dimmer>
+                                    <Board />
+                                </Dimmer.Dimmable >
+                            </Grid.Column>
+                            <Grid.Column>
                                 <ServerInfo />
                                 <BoardPhase />
                             </Grid.Column>
-                            <Grid.Column style={{ minWidth: BOARD_SIZE + 2 * BOARD_PADDING }} width={8}>
+                        </Grid.Row>
+
+                        <Grid.Row only="tablet mobile" columns={1}>
+                            <Grid.Column>
+                                <ActionButtons />
+                            </Grid.Column>
+                        </Grid.Row>
+
+                        <Grid.Row only="tablet mobile" columns={1}>
+                            <Grid.Column>
                                 <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
                                     marginLeft: "70px"
                                 }} >
@@ -49,9 +70,16 @@ class App extends React.Component<Props, object> {
                                 </Dimmer.Dimmable >
                             </Grid.Column>
                         </Grid.Row>
+
+                        <Grid.Row only="tablet mobile" columns={1}>
+                            <Grid.Column>
+                                <ServerInfo />
+                                <BoardPhase />
+                            </Grid.Column>
+                        </Grid.Row>
                     </Grid>
                 </div>
-            </div >
+            </div>
         );
     }
 }
