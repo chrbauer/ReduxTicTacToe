@@ -10,6 +10,7 @@ import BoardPhase from './containers/BoardPhase';
 import ServerInfo from './containers/ServerInfo';
 
 import './App.css';
+import { BOARD_SIZE, BOARD_PADDING } from './constants/Layout';
 
 const logo = require('./logo_ittalk.png');
 
@@ -30,12 +31,14 @@ class App extends React.Component<Props, object> {
                     <h2>IT Talk Redux TTT</h2>
                 </div>
                 <div className="App-content">
-                    <Grid columns={3} relaxed={true}>
+                    <Grid relaxed={true}>
                         <Grid.Row>
-                            <Grid.Column>
+                            <Grid.Column width={4}>
                                 <ActionButtons />
+                                <ServerInfo />
+                                <BoardPhase />
                             </Grid.Column>
-                            <Grid.Column>
+                            <Grid.Column style={{ minWidth: BOARD_SIZE + 2 * BOARD_PADDING }} width={8}>
                                 <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
                                     marginLeft: "70px"
                                 }} >
@@ -44,10 +47,6 @@ class App extends React.Component<Props, object> {
                                     </Dimmer>
                                     <Board />
                                 </Dimmer.Dimmable >
-                            </Grid.Column>
-                            <Grid.Column>
-                                <ServerInfo />
-                                <BoardPhase />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
