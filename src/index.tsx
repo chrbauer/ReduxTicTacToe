@@ -9,6 +9,8 @@ import { StoreState, Optional } from './state/types';
 // Middlewares
 import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import { timestampMiddleware } from './middleware/timestamps';
+
 
 import registerServiceWorker from './registerServiceWorker';
 import { rootReducer } from './state/reducers';
@@ -19,6 +21,7 @@ import './index.css';
 const loggerMiddleware = createLogger();
 
 const store = createStore<Optional<StoreState>>(rootReducer, undefined, applyMiddleware(
+    timestampMiddleware,
     thunkMiddleware,
     loggerMiddleware
 ));

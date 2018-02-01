@@ -5,6 +5,8 @@ import { StoreState } from './types';
 import { Board, Player, initialBoard, updateBoard } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
+import { timingsReducer } from './timings';
+
 const boardReducer = handleActions(
     {
         SET: ((board: Board, action: ActionMeta<number, {}>) => updateBoard(board, action.payload || 0)),
@@ -45,9 +47,15 @@ const serverReducer = handleActions(
     initialServer
 );
 
+
+
 export type RootReducer = Reducer<StoreState>;
 
 export const rootReducer: RootReducer = combineReducers({
     board: boardReducer,
-    server: serverReducer
+    server: serverReducer,
+    timings: timingsReducer
+
 });
+
+

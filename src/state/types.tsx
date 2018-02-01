@@ -7,3 +7,17 @@ export interface StoreState {
     board: Board;
     server: Server;
 } 
+
+//interface Author {
+//    nickname: string;
+//}
+//interface Message {
+//    authorid: number;
+//    timestamp: Date;
+//    message: string;
+
+//}
+//interface ChatStore {
+//    authors: Map<number, Author>;
+//    messages: List<Message>;
+//}

@@ -39,7 +39,7 @@ class App extends React.Component<Props, object> {
                                 <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
                                     marginLeft: "70px"
                                 }} >
-                                    <Dimmer active={searching} blurring={true} inverted={false} >
+                                    <Dimmer active={searching} blurring inverted={false} >
                                         <Loader size='massive'>Searching...</Loader>
                                     </Dimmer>
                                     <Board />
