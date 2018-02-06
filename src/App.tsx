@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Loader, Dimmer } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { StoreState } from './state/types';
 import { OnlineState } from './logic/Server';
@@ -8,17 +8,16 @@ import ActionButtons from './containers/ActionButtons';
 import Board from './containers/Board';
 import BoardPhase from './containers/BoardPhase';
 import ServerInfo from './containers/ServerInfo';
+import Loading from './components/Loading';
 
 import './App.css';
 import { BOARD_SIZE, BOARD_PADDING } from './constants/Layout';
 
 const logo = require('./logo_ittalk.png');
 
-
 export interface Props {
     searching: boolean;
 }
-
 
 class App extends React.Component<Props, object> {
     render() {
@@ -37,14 +36,11 @@ class App extends React.Component<Props, object> {
                                 <ActionButtons />
                             </Grid.Column>
                             <Grid.Column style={{ minWidth: BOARD_SIZE + 2 * BOARD_PADDING }} >
-                                <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
-                                    marginLeft: "70px"
-                                }} >
-                                    <Dimmer active={searching} blurring inverted={false} >
-                                        <Loader size='massive'>Searching...</Loader>
-                                    </Dimmer>
-                                    <Board />
-                                </Dimmer.Dimmable >
+                                <div>
+                                    <Loading loading={searching}>
+                                        <Board />
+                                    </Loading>
+                                </div>
                             </Grid.Column>
                             <Grid.Column>
                                 <ServerInfo />
@@ -60,14 +56,9 @@ class App extends React.Component<Props, object> {
 
                         <Grid.Row only="tablet mobile" columns={1}>
                             <Grid.Column>
-                                <Dimmer.Dimmable as="div" dimmed={false} className="boarddimmer" style={{
-                                    marginLeft: "70px"
-                                }} >
-                                    <Dimmer active={searching} blurring inverted={false} >
-                                        <Loader size='massive'>Searching...</Loader>
-                                    </Dimmer>
+                                <Loading loading={searching}>
                                     <Board />
-                                </Dimmer.Dimmable >
+                                </Loading>
                             </Grid.Column>
                         </Grid.Row>
 

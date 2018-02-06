@@ -19,12 +19,12 @@
     "semantic-ui-react": "^0.77.2"
   },
   "scripts": {
-      "start": "react-scripts-ts start",
-      "build": "react-scripts-ts build",
-      "test": "react-scripts-ts test --env=jsdom",
-      "eject": "react-scripts-ts eject",
-      "server:watch": "tsc -watch  ./src/logic/TicTacToe.ts ./server/index.ts",
-      "server:build": "tsc ./src/logic/TicTacToe.ts ./src/logic/Server.ts ./server/index.ts"
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "server:watch": "tsc -watch  ./src/logic/TicTacToe.ts ./server/index.ts",
+    "server:build": "tsc ./src/logic/TicTacToe.ts ./src/logic/Server.ts ./server/index.ts"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

@@ -1,5 +1,6 @@
 import { Player } from './TicTacToe';
-import { SERVER_URI } from '../constants/Server';
+
+const SERVER_URI = `http://${window.location.hostname}:3333`;
 
 export enum OnlineState {
     Playing, NotPlaying, FindMatch, Error
