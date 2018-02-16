@@ -5,7 +5,6 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const ttt = require('../src/logic/TicTacToe');
 
-
 const app = express();
 
 let room = {
@@ -34,7 +33,7 @@ app.post('/findmatch', function(req, res) {
         const initialGameState = {
             moves: [],
             board: ttt.initialBoard,
-            colorToMove: ttt.Player.X,
+            playerToMove: ttt.Player.X,
             observers: [],
             resigned: ttt.Nobody
         };
@@ -57,7 +56,7 @@ app.post('/findmatch', function(req, res) {
 function sendMove(res, gameState, moveIdx) {
     sendJSON(res, {
         move: gameState.moves[moveIdx],
-        colorToMove: gameState.board.colorToMove,
+        playerToMove: gameState.board.playerToMove,
         done: gameState.resigned !== ttt.Nobody || !ttt.isEditable(gameState.board),
         resigned: gameState.resigned
     });
@@ -65,7 +64,7 @@ function sendMove(res, gameState, moveIdx) {
 
 function setMarker(gameState, idx) {
     gameState.moves.push(idx);
-    gameState.board = ttt.updateBoard(gameState.board, idx);
+    gameState.board = ttt.setMarker(gameState.board, idx);
     const observers = gameState.observers;
     gameState.observers = [];
     for (let obs of observers) {
@@ -97,7 +96,7 @@ app.post('/game/:num', function(req, res) {
         const gameState = games[game];
 
         if (req.body.set != null) {
-            if (req.body.color === gameState.board.colorToMove) {
+            if (req.body.color === gameState.board.playerToMove) {
                 const moveIdx = gameState.moves.length;
                 setMarker(gameState, req.body.set);
                 sendMove(res, gameState, moveIdx);

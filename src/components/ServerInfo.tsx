@@ -19,7 +19,7 @@ class ServerInfo extends React.Component<Props, object> {
         const { server } = this.props;
         let playerToMove = '';
         if (server.onlineState === OnlineState.Playing) {
-            playerToMove = server.player === server.colorToMove ? 'Du' : 'Gegner';
+            playerToMove = server.player === server.playerToMove ? 'Du' : 'Gegner';
         }
         return (
             <Table>

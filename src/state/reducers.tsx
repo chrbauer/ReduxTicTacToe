@@ -2,14 +2,14 @@ import { handleActions, ActionMeta } from 'redux-actions';
 import { combineReducers, Reducer } from 'redux';
 
 import { StoreState } from './types';
-import { Board, Player, initialBoard, updateBoard } from '../logic/TicTacToe';
+import { Board, Player, initialBoard, setMarker } from '../logic/TicTacToe';
 import { Server, OnlineState, initialServer } from '../logic/Server';
 
 import { timingsReducer } from './timings';
 
 const boardReducer = handleActions(
     {
-        SET: ((board: Board, action: ActionMeta<number, {}>) => updateBoard(board, action.payload || 0)),
+        SET: ((board: Board, action: ActionMeta<number, {}>) => setMarker(board, action.payload || 0)),
         NEW: ((board: Board) => initialBoard),
         FINDMATCH_SUCCEEDED: ((board: Board) => initialBoard)
     },
@@ -24,7 +24,7 @@ const serverReducer = handleActions(
             ...payload,
             onlineState: OnlineState.Playing,
             connected: true,
-            colorToMove: Player.X
+            playerToMove: Player.X
         }),
         FINDMATCH_FAILED: (server, { payload }) => ({
             ...server,
@@ -39,7 +39,7 @@ const serverReducer = handleActions(
         }),
         FOLLOWGAME_SUCCEEDED: (server, { payload }: any) => ({
             ...server,
-            colorToMove: payload.colorToMove,
+            playerToMove: payload.playerToMove,
             onlineState: payload.done ? OnlineState.NotPlaying : server.onlineState,
             resigned: payload.resigned
         })

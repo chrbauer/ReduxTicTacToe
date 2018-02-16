@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
     onSet: (idx: number, server: Server, board: ttt.Board) => {
         if (!server.connected) {
             dispatch(actions.set(idx));
-        } else if (server.player === board.colorToMove) {
+        } else if (server.player === board.playerToMove) {
             dispatch(asyncActions.send(server.game, idx));
         }
     }

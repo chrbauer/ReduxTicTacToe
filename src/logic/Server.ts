@@ -11,7 +11,7 @@ export interface Server {
     game: number;
     onlineState: OnlineState;
     player: Player;
-    colorToMove: Player;
+    playerToMove: Player;
     errorMsg: string;
     resigned: Player;
 }
@@ -21,7 +21,7 @@ export const initialServer: Server = {
     game: -1,
     onlineState: OnlineState.NotPlaying,
     player: Player.X,
-    colorToMove: Player.X,
+    playerToMove: Player.X,
     errorMsg: '',
     resigned: Player.Nobody
 };
@@ -44,7 +44,7 @@ export interface FindMatchResponse {
 
 export interface MoveResponse {
     move: number;
-    colorToMove: Player;
+    playerToMove: Player;
     done: boolean;
     resigned: Player;
 }

@@ -16,23 +16,23 @@ export enum Phase {
 export type Fields = List<Player>;
 export interface Board {
     fields: Fields;
-    colorToMove: Player;
+    playerToMove: Player;
     phase: Phase;
 }
 
 export const initialBoard: Board = {
     fields: Repeat(Player.Nobody, 9).toList(),
-    colorToMove: Player.X,
+    playerToMove: Player.X,
     phase: Phase.NotStarted
 };
 
-export const updateBoard = (board: Board, idx: number): Board => {
-    const { fields, colorToMove } = board;
+export const setMarker = (board: Board, idx: number): Board => {
+    const { fields, playerToMove } = board;
     if (isEditable(board) && fields.get(idx) === Player.Nobody) {
-        const newFields = fields.set(idx, colorToMove);
+        const newFields = fields.set(idx, playerToMove);
         return {
             fields: newFields,
-            colorToMove: flipColorToMove(colorToMove),
+            playerToMove: flipColorToMove(playerToMove),
             phase: phaseOfBoard(newFields)
         };
     }
